@@ -1,0 +1,4 @@
+-r requirements-runtime.txt
+openai
+sentence-transformers
+

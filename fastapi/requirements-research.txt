@@ -1,0 +1,6 @@
+-r requirements-runtime-llm.txt
+pandas
+evaluate
+huggingface_hub>=0.23.2,<0.30
+datasets>=2.14,<3.0
+

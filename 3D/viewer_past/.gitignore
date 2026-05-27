@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# Local logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment
+.env
+.env.*
+
+# Copied/generated datasets and temporary outputs
+public/data/
+public/models/
+public/videos/
+generated/
+tmp_frame_checks/
+
+.claude
+.omx

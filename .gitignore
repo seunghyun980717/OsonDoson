@@ -1,0 +1,83 @@
+# Spring Boot
+backend/build/
+backend/.gradle/
+backend/*.jar
+backend/*.war
+
+# React Native (android/frontend - Expo managed)
+android/frontend/node_modules/
+android/frontend/.expo/
+android/frontend/dist/
+android/frontend/web-build/
+android/frontend/.env
+android/frontend/.env.local
+# (prebuild 시에만 생성됨, 대비용)
+android/frontend/android/.gradle/
+android/frontend/android/app/build/
+android/frontend/android/local.properties
+android/frontend/android/app/*.keystore
+android/frontend/ios/Pods/
+android/frontend/ios/build/
+
+# React (Vite + TypeScript)
+jetson/frontend/node_modules/                                                                                                                                                    
+jetson/frontend/dist/
+jetson/frontend/dist-ssr/
+jetson/frontend/build/
+jetson/frontend/.vite/
+jetson/frontend/*.local
+
+# Vite / TypeScript 캐시
+jetson/frontend/.eslintcache
+jetson/frontend/*.tsbuildinfo
+
+# 로그
+jetson/frontend/*.log
+
+# 테스트 / 커버리지
+jetson/frontend/coverage/
+
+# Jetson
+jetson/__pycache__/
+jetson/*.pyc
+jetson/.env
+
+# 3D generated/sample data
+3D/sen/
+3D/hand_lifting/runs/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 환경변수
+.env
+*.env
+.env.development
+
+# Claude
+.claude/
+.claude.json
+.claude.local.json
+CLAUDE.md
+CLAUDE.local.md
+.mcp.json
+
+# Codex
+.omx
+AGENTS.md
+docs/
+
+# Local markdown issues
+.scratch/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+backend/env

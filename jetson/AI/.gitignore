@@ -1,0 +1,12 @@
+# 대용량 원본/로컬 데이터 루트
+data/
+NIA_CSLR/
+.claude/
+__pycache__/
+*.py[cod]
+runtime/api/app/static/audio/*.mp3
+runtime/api/app/static/json/*.json
+.venv/
+app/static/audio/*.mp3
+app/static/video/*.mp4
+app/static/json/*.json

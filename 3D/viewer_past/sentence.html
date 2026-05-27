@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentence Sign Avatar</title>
+  </head>
+  <body class="sentence-page">
+    <div id="app" class="sentence-app">
+      <section class="sentence-left-column">
+        <div class="media-card">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Sentence Keypoint</p>
+              <p class="panel__text" id="sentence-frame-label">Sentence: not loaded</p>
+            </div>
+          </div>
+          <div class="media-stage">
+            <canvas id="keypoint-canvas" class="keypoint-canvas"></canvas>
+            <canvas id="keypoint-face-canvas" class="face-zoom-overlay is-hidden"></canvas>
+          </div>
+          <div class="keypoint-correction-panel" id="keypoint-correction-info">Correction: -</div>
+        </div>
+      </section>
+
+      <section class="right-column">
+        <div class="viewer-card">
+          <div id="viewer-canvas"></div>
+        </div>
+
+        <div class="controls-card">
+          <div class="sentence-controls-grid">
+            <input
+              id="sentence-path-input"
+              class="frame-input"
+              type="text"
+              value="/sen/sentence.json"
+              aria-label="Sentence JSON Path"
+            />
+            <button type="button" class="action-button action-button--small" id="load-sentence">Load</button>
+            <button type="button" class="action-button action-button--small" id="play-sentence">Play</button>
+            <button type="button" class="action-button action-button--small" id="stop-sentence">Stop</button>
+            <input
+              id="sentence-frame-input"
+              class="frame-input"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="Frame"
+              aria-label="Frame Number"
+            />
+            <button type="button" class="action-button action-button--small" id="show-sentence-frame">Show</button>
+          </div>
+          <div class="interpolation-panel">
+            <div class="interpolation-config-grid">
+              <input
+                id="interpolation-test-name"
+                class="frame-input"
+                type="text"
+                value="aihub-word-json-sample-1-119-12"
+                aria-label="Interpolation Test Name"
+              />
+              <input
+                id="interpolation-words"
+                class="frame-input"
+                type="text"
+                value="1 119 12"
+                aria-label="Interpolation Words"
+              />
+              <input
+                id="interpolation-frames"
+                class="frame-input"
+                type="number"
+                min="1"
+                step="1"
+                value="12"
+                aria-label="Transition Frames"
+              />
+              <button type="button" class="action-button action-button--small" id="run-interpolation-test">Run</button>
+            </div>
+            <div class="interpolation-method-grid" id="interpolation-methods">
+              <button type="button" class="action-button action-button--small" data-method="linear">Linear</button>
+              <button type="button" class="action-button action-button--small" data-method="smoothstep">Smoothstep</button>
+              <button type="button" class="action-button action-button--small" data-method="hermite">Hermite</button>
+              <button type="button" class="action-button action-button--small" data-method="catmull_rom">Catmull</button>
+              <button type="button" class="action-button action-button--small" data-method="bezier">Bezier</button>
+              <button type="button" class="action-button action-button--small" id="load-interpolation-report">Report</button>
+            </div>
+            <pre id="interpolation-report" class="interpolation-report"></pre>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <video id="reference-video" hidden muted playsinline></video>
+    <canvas id="reference-face-canvas" hidden></canvas>
+    <script type="module" src="/src/sentence.js"></script>
+  </body>
+</html>

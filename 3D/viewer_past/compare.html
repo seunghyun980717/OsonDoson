@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Sign Compare</title>
+  </head>
+  <body>
+    <div id="compare-app">
+      <header class="compare-toolbar">
+        <div class="compare-toolbar-copy">
+          <a class="compare-back-link" href="/index.html">루트로 돌아가기</a>
+          <p class="eyebrow" id="compare-eyebrow">Compare</p>
+          <h1 class="compare-title" id="compare-title">원본 vs Word 기반 보간</h1>
+        </div>
+
+        <div class="compare-controls">
+          <select id="pair-select" class="compare-select" aria-label="Compare Pair"></select>
+          <button type="button" id="compare-play" class="compare-button">Play</button>
+          <button type="button" id="compare-stop" class="compare-button">Stop</button>
+          <button type="button" id="compare-reset" class="compare-button">Reset</button>
+        </div>
+      </header>
+
+      <section class="compare-status">
+        <label class="range-block">
+          <span id="progress-label">0%</span>
+          <input id="progress-range" type="range" min="0" max="1000" value="0" />
+        </label>
+        <p id="metric-summary" class="metric-summary">metrics: -</p>
+      </section>
+
+      <section class="compare-grid">
+        <article class="compare-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-eyebrow">Left Avatar</p>
+              <h2 id="left-title">원본 Keypoint Avatar</h2>
+              <p id="left-detail" class="panel-detail">문장 정보: -</p>
+            </div>
+            <p id="left-meta" class="panel-meta">-</p>
+          </div>
+          <iframe id="left-frame" class="compare-frame" title="Original Avatar"></iframe>
+        </article>
+
+        <article class="compare-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-eyebrow">Right Avatar</p>
+              <h2 id="right-title">Word 기반 보간 Avatar</h2>
+              <p id="right-detail" class="panel-detail">사용 단어: -</p>
+            </div>
+            <p id="right-meta" class="panel-meta">-</p>
+          </div>
+          <iframe id="right-frame" class="compare-frame" title="Interpolated Avatar"></iframe>
+        </article>
+      </section>
+    </div>
+
+    <script type="module" src="/src/compare.js"></script>
+  </body>
+</html>

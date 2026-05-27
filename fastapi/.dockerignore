@@ -1,0 +1,13 @@
+.claude/
+__pycache__/
+*.py[cod]
+data/external/
+data/raw/
+poc/
+NIA_CSLR/
+runtime/api/app/static/audio/
+runtime/api/app/static/video/
+app/static/audio/
+app/static/video/
+out*.mp4
+

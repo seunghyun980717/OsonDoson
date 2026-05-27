@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Smoothing Compare</title>
+  </head>
+  <body>
+    <div id="keypoint-smoothing-app">
+      <header class="kp-compare-toolbar">
+        <div>
+          <a class="kp-compare-back-link" href="/index.html">Word Viewer</a>
+          <p class="eyebrow">3D QA Compare</p>
+          <h1>Original 2D Input vs Smoothed 2D Input</h1>
+          <p class="kp-compare-subtitle" id="compare-status">Loading smoothing 3D QA words</p>
+        </div>
+
+        <div class="kp-compare-controls">
+          <select id="source-word-select" class="kp-compare-select" aria-label="Source Word"></select>
+          <select id="compare-mode" class="kp-compare-speed" aria-label="Prediction Mode">
+            <option value="center" selected>center</option>
+            <option value="sequence">sequence</option>
+          </select>
+          <select id="compare-speed" class="kp-compare-speed" aria-label="Playback Speed">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+          </select>
+          <button type="button" id="load-pair" class="kp-compare-button">Load</button>
+          <button type="button" id="play-pair" class="kp-compare-button">Play All</button>
+        </div>
+      </header>
+
+      <section class="kp-compare-timeline">
+        <span id="frame-label">Frame 1 / 1</span>
+        <input id="frame-range" type="range" min="0" max="0" value="0" step="1" aria-label="Frame" />
+      </section>
+
+      <main class="kp-compare-grid">
+        <section class="kp-compare-panel">
+          <div class="kp-panel-header">
+            <div>
+              <p class="panel-eyebrow">Original Input</p>
+              <h2 id="original-title">3D original</h2>
+            </div>
+            <p id="original-meta" class="kp-panel-meta">-</p>
+          </div>
+          <iframe id="original-frame" class="kp-compare-frame" title="Original 2D Input 3D Viewer"></iframe>
+        </section>
+
+        <section class="kp-compare-panel">
+          <div class="kp-panel-header">
+            <div>
+              <p class="panel-eyebrow">Smoothed Input</p>
+              <h2 id="smoothed-title">3D smoothed</h2>
+            </div>
+            <p id="smoothed-meta" class="kp-panel-meta">-</p>
+          </div>
+          <iframe id="smoothed-frame" class="kp-compare-frame" title="Smoothed 2D Input 3D Viewer"></iframe>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/keypoint-smoothing-compare.js"></script>
+  </body>
+</html>

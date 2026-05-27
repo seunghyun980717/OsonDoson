@@ -1,0 +1,25 @@
+# EAS Build는 git root에서 archive를 만들지만 모바일 빌드는 android/frontend만 사용.
+# 다른 팀 디렉터리는 빌드 대상이 아니므로 모두 제외해 archive 크기를 2GB 미만으로 유지.
+
+# Other team subprojects (전체 제외)
+backend/
+fastapi/
+jetson/
+docs/
+
+# Repo-level
+.git/
+.claude/
+
+# android/frontend 내부 — 큰 빌드 산출물 (CNG: prebuild로 매번 재생성)
+android/frontend/node_modules/
+android/frontend/.expo/
+android/frontend/android/
+android/frontend/ios/
+android/frontend/dist/
+android/frontend/build/
+
+# 환경/시크릿
+**/.env*.local
+**/*.keystore
+**/*.jks

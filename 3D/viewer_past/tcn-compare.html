@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TCN Center vs Sequence</title>
+  </head>
+  <body>
+    <div id="tcn-compare-app">
+      <header class="tcn-compare-toolbar">
+        <div>
+          <a class="tcn-compare-back-link" href="/index.html">Word Viewer</a>
+          <p class="eyebrow">TCN QA Compare</p>
+          <h1>Center vs Sequence</h1>
+          <p class="tcn-compare-subtitle" id="compare-status">Loading QA words</p>
+        </div>
+
+        <div class="tcn-compare-controls">
+          <select id="source-word-select" class="tcn-compare-select" aria-label="Source Word"></select>
+          <select id="compare-speed" class="tcn-compare-speed" aria-label="Playback Speed">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+          </select>
+          <button type="button" id="load-pair" class="tcn-compare-button">Load</button>
+          <button type="button" id="play-pair" class="tcn-compare-button">Play All</button>
+        </div>
+      </header>
+
+      <section class="tcn-compare-timeline">
+        <span id="frame-label">Frame 1 / 1</span>
+        <input id="frame-range" type="range" min="0" max="0" value="0" step="1" aria-label="Frame" />
+      </section>
+
+      <main class="tcn-compare-grid">
+        <section class="tcn-compare-panel">
+          <div class="tcn-panel-header">
+            <div>
+              <p class="panel-eyebrow">Center</p>
+              <h2 id="center-title">3D center</h2>
+            </div>
+            <p id="center-word" class="tcn-panel-meta">-</p>
+          </div>
+          <iframe id="center-frame" class="tcn-compare-frame" title="TCN Center Viewer"></iframe>
+        </section>
+
+        <section class="tcn-compare-panel">
+          <div class="tcn-panel-header">
+            <div>
+              <p class="panel-eyebrow">2D Sequence</p>
+              <h2 id="sequence-2d-title">image_2d</h2>
+            </div>
+            <p id="sequence-2d-meta" class="tcn-panel-meta">-</p>
+          </div>
+          <canvas id="sequence-2d-canvas" class="tcn-sequence-canvas"></canvas>
+        </section>
+
+        <section class="tcn-compare-panel">
+          <div class="tcn-panel-header">
+            <div>
+              <p class="panel-eyebrow">Sequence</p>
+              <h2 id="sequence-title">3D sequence</h2>
+            </div>
+            <p id="sequence-word" class="tcn-panel-meta">-</p>
+          </div>
+          <iframe id="sequence-frame" class="tcn-compare-frame" title="TCN Sequence Viewer"></iframe>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/tcn-compare.js"></script>
+  </body>
+</html>

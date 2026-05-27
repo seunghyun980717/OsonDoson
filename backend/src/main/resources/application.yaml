@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: backend
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/backend}
+
+springdoc:
+  api-docs:
+    # OpenAPI JSON document endpoint
+    path: /api-docs
+  swagger-ui:
+    # Swagger UI entry page
+    path: /swagger-ui.html
+
+sign2speech:
+  fastapi:
+    base-url: ${SIGN2SPEECH_FASTAPI_BASE_URL:http://localhost:8000}
+    sign-to-speech-path: ${SIGN2SPEECH_FASTAPI_SIGN_TO_SPEECH_PATH:/sign-to-speech}
+    glosses-to-speech-path: ${SIGN2SPEECH_FASTAPI_GLOSSES_TO_SPEECH_PATH:/glosses-to-speech}
+    audio-asset-path: ${SIGN2SPEECH_FASTAPI_AUDIO_ASSET_PATH:/static/audio}
+    speech-to-sign-path: ${SIGN2SPEECH_FASTAPI_SPEECH_TO_SIGN_PATH:/speech-to-sign}
+    text-to-sign-path: ${SIGN2SPEECH_FASTAPI_TEXT_TO_SIGN_PATH:/text-to-sign}
+    gloss-recommend-path: ${SIGN2SPEECH_FASTAPI_GLOSS_RECOMMEND_PATH:/glosses/recommend}

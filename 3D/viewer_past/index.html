@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Sign Avatar</title>
+  </head>
+  <body class="word-page">
+    <div id="app" class="sentence-app">
+      <section class="sentence-left-column">
+        <div class="media-card">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Word Keypoint</p>
+              <p class="panel__text" id="word-frame-label">Word: not loaded</p>
+            </div>
+            <button type="button" class="expand-button" data-face-target="keypoint-face-canvas" aria-label="Toggle Keypoint Face Zoom">
+              Face
+            </button>
+          </div>
+          <div class="media-stage">
+            <canvas id="keypoint-canvas" class="keypoint-canvas"></canvas>
+            <canvas id="keypoint-face-canvas" class="face-zoom-overlay is-hidden"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="right-column">
+        <div class="viewer-card">
+          <div id="viewer-canvas"></div>
+        </div>
+
+        <div class="controls-card">
+          <div class="sentence-controls-grid">
+            <select id="word-select" class="sequence-select" aria-label="Word Select"></select>
+            <input
+              id="word-input"
+              class="frame-input"
+              type="text"
+              value="0"
+              aria-label="Word or Word JSON Path"
+            />
+            <button type="button" class="action-button action-button--small" id="load-word">Load</button>
+            <button type="button" class="action-button action-button--small" id="play-word">Play</button>
+            <button type="button" class="action-button action-button--small" id="stop-word">Stop</button>
+            <button type="button" class="action-button action-button--small" id="qa-word-filter">QA Only</button>
+            <select id="playback-speed" class="sequence-select sequence-select--small" aria-label="Playback Speed">
+              <option value="0.25">0.25x</option>
+              <option value="0.5">0.5x</option>
+              <option value="0.75">0.75x</option>
+              <option value="1" selected>1x</option>
+            </select>
+            <input
+              id="word-frame-input"
+              class="frame-input"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="Frame"
+              aria-label="Frame Number"
+            />
+            <button type="button" class="action-button action-button--small" id="show-word-frame">Show</button>
+            <a class="action-button action-button--small nav-button" href="/tcn-compare.html">TCN Compare</a>
+            <a class="action-button action-button--small nav-button" href="/keypoint-smoothing-compare.html">3D Smoothing Compare</a>
+            <a class="action-button action-button--small nav-button" href="/keypoint-preprocess-compare.html">2D Preprocess Compare</a>
+            <a class="action-button action-button--small nav-button" href="/sentence.html">Sentence</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <video id="reference-video" hidden muted playsinline></video>
+    <canvas id="reference-face-canvas" hidden></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2D Preprocess Compare</title>
+  </head>
+  <body>
+    <div id="keypoint-preprocess-app">
+      <header class="kp-compare-toolbar">
+        <div>
+          <a class="kp-compare-back-link" href="/index.html">Word Viewer</a>
+          <p class="eyebrow">2D Preprocess QA</p>
+          <h1>Original 2D vs Corrected 2D</h1>
+          <p class="kp-compare-subtitle" id="compare-status">Loading 2D preprocess QA words</p>
+        </div>
+
+        <div class="kp-compare-controls">
+          <select id="source-word-select" class="kp-compare-select" aria-label="Source Word"></select>
+          <select id="compare-speed" class="kp-compare-speed" aria-label="Playback Speed">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+          </select>
+          <button type="button" id="load-pair" class="kp-compare-button">Load</button>
+          <button type="button" id="play-pair" class="kp-compare-button">Play All</button>
+        </div>
+      </header>
+
+      <section class="kp-compare-timeline">
+        <span id="frame-label">Frame 1 / 1</span>
+        <input id="frame-range" type="range" min="0" max="0" value="0" step="1" aria-label="Frame" />
+      </section>
+
+      <main class="kp-compare-grid kp-compare-grid--three">
+        <section class="kp-compare-panel">
+          <div class="kp-panel-header">
+            <div>
+              <p class="panel-eyebrow">Original 2D</p>
+              <h2>image_2d</h2>
+            </div>
+            <p id="original-meta" class="kp-panel-meta">-</p>
+          </div>
+          <canvas id="original-canvas" class="kp-compare-canvas"></canvas>
+        </section>
+
+        <section class="kp-compare-panel">
+          <div class="kp-panel-header">
+            <div>
+              <p class="panel-eyebrow">Overlay</p>
+              <h2>changed points</h2>
+            </div>
+            <p id="overlay-meta" class="kp-panel-meta">-</p>
+          </div>
+          <canvas id="overlay-canvas" class="kp-compare-canvas"></canvas>
+        </section>
+
+        <section class="kp-compare-panel">
+          <div class="kp-panel-header">
+            <div>
+              <p class="panel-eyebrow">Corrected 2D</p>
+              <h2>smooth2d_v2</h2>
+            </div>
+            <p id="corrected-meta" class="kp-panel-meta">-</p>
+          </div>
+          <canvas id="corrected-canvas" class="kp-compare-canvas"></canvas>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/keypoint-preprocess-compare.js"></script>
+  </body>
+</html>

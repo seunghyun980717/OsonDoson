@@ -1,0 +1,9 @@
+{
+  "name": "sign-keypoint-converter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build:word-json": "node build-word-json.mjs"
+  }
+}

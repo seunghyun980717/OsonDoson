@@ -1,0 +1,27 @@
+# Local dependencies
+node_modules/
+
+# Build outputs
+viewer/dist/
+keypoint-converter/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Generated or copied data
+viewer/public/data/
+viewer/public/videos/
+viewer/generated/
+viewer/tmp_frame_checks/
+/data/
+/sen
+
+# Local tool state
+.claude/
+.omx/
+
+/backups/

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>수어 번역 Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; padding: 32px 24px; min-height: 100vh; }
+
+    h1 { font-size: 1.7rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .sub { color: #666; font-size: 0.9rem; margin-bottom: 36px; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1080px; margin: 0 auto; }
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { background: #1a1d27; border: 1px solid #252836; border-radius: 14px; padding: 24px; }
+    .card-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #6c8ef7; margin-bottom: 20px; }
+
+    /* drop zone */
+    .drop { border: 2px dashed #2e3250; border-radius: 10px; padding: 28px 20px; text-align: center; cursor: pointer; transition: .2s; }
+    .drop:hover, .drop.over { border-color: #6c8ef7; background: rgba(108,142,247,.06); }
+    .drop-icon { font-size: 2.4rem; }
+    .drop-hint { font-size: 0.85rem; color: #555; margin-top: 8px; }
+    .drop-name { font-size: 0.8rem; color: #6c8ef7; font-family: monospace; margin-top: 6px; min-height: 18px; }
+    input[type=file] { display: none; }
+
+    /* preview */
+    video.preview { width: 100%; border-radius: 8px; margin-top: 14px; background: #000; display: none; max-height: 240px; object-fit: contain; }
+
+    /* button */
+    .btn { width: 100%; margin-top: 14px; padding: 12px; background: #6c8ef7; color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn:hover { background: #5a7de6; }
+    .btn:disabled { background: #252836; color: #444; cursor: not-allowed; }
+
+    /* status */
+    .status { font-size: 0.82rem; min-height: 22px; margin-top: 10px; }
+    .status.loading { color: #f0a04b; }
+    .status.ok  { color: #7effc0; }
+    .status.err { color: #ff6b6b; }
+    .spin { display: inline-block; width: 12px; height: 12px; border: 2px solid #444; border-top-color: #6c8ef7; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 6px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* result */
+    .result { margin-top: 20px; display: none; }
+    .lbl { font-size: 0.72rem; color: #555; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .val { background: #0f1117; border: 1px solid #252836; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; word-break: break-all; }
+    .val.gloss  { color: #a0c4ff; font-family: monospace; font-size: 1rem; }
+    .val.korean { color: #7effc0; font-size: 1.15rem; font-weight: 500; }
+    audio { width: 100%; margin-bottom: 14px; border-radius: 6px; }
+    .timings { font-size: 0.76rem; font-family: monospace; color: #555; line-height: 2; }
+    .timings b { color: #888; }
+
+    /* s2s */
+    .txt-input { width: 100%; padding: 11px 14px; background: #0f1117; border: 1px solid #252836; border-radius: 8px; color: #e0e0e0; font-size: 0.95rem; margin-bottom: 4px; outline: none; transition: border-color .2s; }
+    .txt-input:focus { border-color: #6c8ef7; }
+    .val.path { font-family: monospace; font-size: 0.78rem; color: #888; }
+
+    .hint { font-size: 0.78rem; color: #444; margin-bottom: 14px; }
+  </style>
+</head>
+<body>
+<div style="max-width:1080px;margin:0 auto">
+  <h1>🤟 수어 번역 Demo</h1>
+  <p class="sub">Sign-to-Speech &nbsp;·&nbsp; Speech-to-Sign &nbsp;|&nbsp; Python FastAPI 단독 파이프라인</p>
+
+  <div class="grid">
+
+    <!-- ══ Sign-to-Speech ══════════════════════════════ -->
+    <div class="card">
+      <div class="card-title">🧏 Sign → Speech</div>
+
+      <!-- 탭: 영상 / npy -->
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="tab-btn active" id="tabVideo" onclick="switchTab('video')">영상 파일</button>
+        <button class="tab-btn" id="tabNpy" onclick="switchTab('npy')">npy 파일 (테스트)</button>
+      </div>
+
+      <!-- 영상 탭 -->
+      <div id="panelVideo">
+        <p class="hint">수어 영상을 업로드하면 MediaPipe → CTC → T5 → TTS 전체 파이프라인이 실행됩니다.</p>
+        <div class="drop" id="dropVideo" onclick="document.getElementById('vidInput').click()">
+          <div class="drop-icon">🎬</div>
+          <div class="drop-hint">영상 파일 드래그&드롭 또는 클릭</div>
+          <div class="drop-name" id="vidName">파일 미선택</div>
+        </div>
+        <input type="file" id="vidInput" accept="video/*">
+        <video class="preview" id="vidPreview" controls></video>
+      </div>
+
+      <!-- npy 탭 -->
+      <div id="panelNpy" style="display:none">
+        <p class="hint">cache/*.npy 파일을 올리면 CTC 이후 파이프라인만 실행됩니다 (MediaPipe 생략).</p>
+        <div class="drop" id="dropNpy" onclick="document.getElementById('npyInput').click()">
+          <div class="drop-icon">📂</div>
+          <div class="drop-hint">cache/*.npy 드래그&드롭 또는 클릭</div>
+          <div class="drop-name" id="npyName">파일 미선택</div>
+        </div>
+        <input type="file" id="npyInput" accept=".npy">
+      </div>
+
+      <button class="btn" id="runBtn" disabled>▶ 실행</button>
+      <div class="status" id="s2sStatus"></div>
+
+      <div class="result" id="s2sResult">
+        <div class="lbl">글로스</div>
+        <div class="val gloss" id="resGloss">—</div>
+        <div class="lbl">한국어</div>
+        <div class="val korean" id="resKorean">—</div>
+        <div class="lbl">음성</div>
+        <audio id="resAudio" controls></audio>
+        <div class="timings" id="resTimings"></div>
+      </div>
+    </div>
+
+    <!-- ══ Speech-to-Sign ══════════════════════════════ -->
+    <div class="card">
+      <div class="card-title">🗣️ Speech → Sign</div>
+      <p class="hint">한국어 문장을 입력하면 글로스로 변환 후 수어 영상 경로를 반환합니다.</p>
+
+      <input class="txt-input" id="textInput" type="text"
+             placeholder="예: 버스 타는 곳이 어디에요?" />
+      <button class="btn" id="s2sBtn">▶ 수어 영상 생성</button>
+      <div class="status" id="textStatus"></div>
+
+      <div class="result" id="s2sVideoBox">
+        <div class="lbl">변환된 글로스</div>
+        <div class="val gloss" id="textGloss">—</div>
+        <div class="lbl">수어 영상 경로</div>
+        <div class="val path" id="textVideoPath">—</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.tab-btn { padding: 6px 16px; border-radius: 6px; border: 1px solid #252836; background: #0f1117; color: #666; font-size: 0.82rem; cursor: pointer; transition: .2s; }
+.tab-btn.active { background: #6c8ef7; border-color: #6c8ef7; color: #fff; }
+</style>
+
+<script>
+let curTab = 'video';
+let selectedFile = null;
+
+/* ── 탭 전환 ─────────────────────────────── */
+function switchTab(tab) {
+  curTab = tab;
+  document.getElementById('panelVideo').style.display = tab === 'video' ? '' : 'none';
+  document.getElementById('panelNpy').style.display   = tab === 'npy'   ? '' : 'none';
+  document.getElementById('tabVideo').className = 'tab-btn' + (tab === 'video' ? ' active' : '');
+  document.getElementById('tabNpy').className   = 'tab-btn' + (tab === 'npy'   ? ' active' : '');
+  selectedFile = null;
+  document.getElementById('runBtn').disabled = true;
+  clearResult();
+}
+
+function clearResult() {
+  document.getElementById('s2sResult').style.display = 'none';
+  document.getElementById('s2sStatus').textContent = '';
+  document.getElementById('s2sStatus').className = 'status';
+}
+
+/* ── 파일 선택 ───────────────────────────── */
+function setupDrop(dropId, inputId, nameId, onFile) {
+  const drop  = document.getElementById(dropId);
+  const input = document.getElementById(inputId);
+  const name  = document.getElementById(nameId);
+
+  input.addEventListener('change', e => onFile(e.target.files[0]));
+  drop.addEventListener('dragover',  e => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.classList.remove('over');
+    onFile(e.dataTransfer.files[0]);
+  });
+}
+
+setupDrop('dropVideo', 'vidInput', 'vidName', f => {
+  if (!f) return;
+  selectedFile = f;
+  document.getElementById('vidName').textContent = f.name;
+  document.getElementById('runBtn').disabled = false;
+  clearResult();
+  const preview = document.getElementById('vidPreview');
+  preview.src = URL.createObjectURL(f);
+  preview.style.display = 'block';
+});
+
+setupDrop('dropNpy', 'npyInput', 'npyName', f => {
+  if (!f) return;
+  selectedFile = f;
+  document.getElementById('npyName').textContent = f.name;
+  document.getElementById('runBtn').disabled = false;
+  clearResult();
+});
+
+/* ── Sign-to-Speech 실행 ─────────────────── */
+document.getElementById('runBtn').addEventListener('click', async () => {
+  if (!selectedFile) return;
+
+  const endpoint = curTab === 'video' ? '/sign-to-speech/video' : '/sign-to-speech/npy';
+  const status   = document.getElementById('s2sStatus');
+
+  document.getElementById('runBtn').disabled = true;
+  status.className = 'status loading';
+  status.innerHTML = '<span class="spin"></span>처리 중...';
+  document.getElementById('s2sResult').style.display = 'none';
+
+  const fd = new FormData();
+  fd.append('file', selectedFile);
+
+  try {
+    const res  = await fetch(endpoint, { method: 'POST', body: fd });
+    const data = await res.json();
+
+    if (!res.ok) {
+      status.className = 'status err';
+      status.textContent = `오류 ${res.status}: ${data.detail || JSON.stringify(data)}`;
+      return;
+    }
+
+    document.getElementById('resGloss').textContent  = data.gloss  || '(없음)';
+    document.getElementById('resKorean').textContent = data.korean || '(없음)';
+
+    const audio = document.getElementById('resAudio');
+    if (data.audio_path) {
+      audio.src = data.audio_path;   // /static/audio/xxx.mp3
+      audio.style.display = 'block';
+      audio.load();
+    } else {
+      audio.style.display = 'none';
+    }
+
+    const t = data.timings || {};
+    document.getElementById('resTimings').innerHTML =
+      Object.entries(t).map(([k, v]) =>
+        `<b>${k}</b>　${typeof v === 'number' ? (v * 1000).toFixed(0) + 'ms' : v}`
+      ).join('<br>');
+
+    document.getElementById('s2sResult').style.display = 'block';
+    status.className = 'status ok';
+    status.textContent = '✓ 완료';
+  } catch (err) {
+    status.className = 'status err';
+    status.textContent = `네트워크 오류: ${err.message}`;
+  } finally {
+    document.getElementById('runBtn').disabled = false;
+  }
+});
+
+/* ── Speech-to-Sign ──────────────────────── */
+const s2sBtn  = document.getElementById('s2sBtn');
+const txtIn   = document.getElementById('textInput');
+
+txtIn.addEventListener('keydown', e => { if (e.key === 'Enter') s2sBtn.click(); });
+
+s2sBtn.addEventListener('click', async () => {
+  const text = txtIn.value.trim();
+  if (!text) return;
+
+  const status = document.getElementById('textStatus');
+  s2sBtn.disabled = true;
+  status.className = 'status loading';
+  status.innerHTML = '<span class="spin"></span>영상 생성 중...';
+  document.getElementById('s2sVideoBox').style.display = 'none';
+
+  try {
+    const res  = await fetch('/speech-to-sign/text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      status.className = 'status err';
+      status.textContent = `오류 ${res.status}: ${data.detail || JSON.stringify(data)}`;
+      return;
+    }
+
+    document.getElementById('textGloss').textContent     = data.gloss_str || data.glosses?.join(' ') || '—';
+    document.getElementById('textVideoPath').textContent = data.video_path || '(영상 없음)';
+
+    document.getElementById('s2sVideoBox').style.display = 'block';
+    status.className = 'status ok';
+    status.textContent = '✓ 완료';
+  } catch (err) {
+    status.className = 'status err';
+    status.textContent = `네트워크 오류: ${err.message}`;
+  } finally {
+    s2sBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

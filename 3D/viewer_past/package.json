@@ -1,0 +1,24 @@
+{
+  "name": "3d-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sync:training-data": "node scripts/sync-training-dataset.mjs",
+    "build:sen-labels": "node scripts/build-sen-multiview-labels.mjs",
+    "build:sen-dataset": "node scripts/build-sen-correction-dataset.mjs",
+    "build:sen-profile": "node scripts/build-sen-correction-profile.mjs",
+    "build:sen-correction": "npm run build:sen-labels && npm run build:sen-dataset && npm run build:sen-profile",
+    "build:multiview": "node scripts/build-multiview-analysis.mjs",
+    "convert:coco-wholebody": "node scripts/convert-coco-wholebody-sequence.mjs"
+  },
+  "dependencies": {
+    "three": "^0.179.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.3"
+  }
+}

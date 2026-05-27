@@ -1,0 +1,144 @@
+@import 'pretendard/dist/web/variable/pretendardvariable.css';
+@import 'tailwindcss';
+
+@theme {
+  /* === Neutral (공통 배경 & 텍스트) === */
+  --color-neutral-0: #ffffff; /* 순백색 - 카드/박스 내부 */
+  --color-neutral-bg: #faf9f6; /* 중성 웜 화이트 - 앱 전체 배경 */
+  --color-neutral-100: #f5f2f2;
+  --color-neutral-200: #ede3e3;
+  --color-neutral-400: #b7b0ae;
+  --color-neutral-600: #7a6e6b; /* 서브 텍스트 (중간 회색) */
+  --color-neutral-900: #3d3533; /* 메인 텍스트 (검회색) */
+
+  /* === Green scale (청인 / Hearing) — sage 톤 파스텔 === */
+  --color-green-50: #f5fbf6; /* 가장 옅음 - subtle tint */
+  --color-green-100: #e6f4e8; /* 연한 sage - 헤더 배경 */
+  --color-green-300: #d4ebd6; /* 중간 - border, divider */
+  --color-green-500: #a8d9ad; /* 메인 sage - 액션 버튼, 상태 점 */
+  --color-green-600: #94cc99; /* 호버용 - 500 채도 유지하면서 명도만 살짝 다운 */
+  --color-green-700: #5ca866; /* 진한 sage - 강조, 포커스 링 */
+
+  /* === Peach scale (농인 / Signer) — 부드러운 살구 === */
+  --color-peach-50: #fff8f3; /* 가장 옅음 - subtle tint */
+  --color-peach-100: #fff0e8; /* 연한 피치 - 헤더 배경 */
+  --color-peach-300: #ffd9c4; /* 중간 - border, divider */
+  --color-peach-500: #ffb89a; /* 메인 피치 - 액션 버튼, 상태 점 */
+  --color-peach-600: #f5a585; /* 호버용 - 500 채도 유지하면서 명도만 살짝 다운 */
+  --color-peach-700: #e88a5f; /* 진한 피치 - 강조, 포커스 링 (채도 유지로 탁함 회피) */
+
+  /* === Red (에러 전용) === */
+  --color-red-100: #fce4e6;
+  --color-red-500: #d9525e;
+  --color-red-700: #a83441; /* 채도 유지로 brick 톤 회피 */
+
+  /* === Status Online (teal — hearing 그린과 색상 거리 확보) === */
+  --color-status-online: #14b8a6;
+
+  /* === Semantic — Surface === */
+  --color-surface-page: var(--color-neutral-bg);
+  --color-surface-screen: var(--color-neutral-0);
+  --color-surface-card: var(--color-neutral-0);
+
+  /* === Semantic — Text === */
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-muted: var(--color-neutral-400);
+  --color-text-on-accent: var(--color-neutral-0);
+
+  /* === Semantic — Border === */
+  --color-border-light: var(--color-neutral-100);
+  --color-border-default: var(--color-neutral-200);
+
+  /*
+   * 역할 토큰 — 청인/농인 화면 구분
+   * action-fg: 파스텔 액션 버튼 위 텍스트는 흰색 대신 검회색을 사용해
+   *            WCAG AA 대비비(4.5:1) 통과.
+   *            - sage:  #3d3533 on #a8d9ad ≈ 8:1
+   *            - peach: #3d3533 on #ffb89a ≈ 7:1
+   *            두 색 모두 흰색 텍스트와는 대비비 부족 — 사용 금지.
+   */
+
+  /* === Role — 청인 (Hearing / Sage Green) === */
+  --color-hearing-bg: var(--color-green-100);
+  --color-hearing-border: var(--color-green-300);
+  --color-hearing-action: var(--color-green-500);
+  --color-hearing-action-hover: var(--color-green-600);
+  --color-hearing-action-fg: var(--color-text-primary);
+  --color-hearing-dot: var(--color-green-500);
+  --color-hearing-focus-ring: var(--color-green-700);
+
+  /* === Role — 농인 (Signer / Peach) === */
+  --color-signer-bg: var(--color-peach-100);
+  --color-signer-border: var(--color-peach-300);
+  --color-signer-action: var(--color-peach-500);
+  --color-signer-action-hover: var(--color-peach-600);
+  --color-signer-action-fg: var(--color-text-primary);
+  --color-signer-dot: var(--color-peach-500);
+  --color-signer-focus-ring: var(--color-peach-700);
+
+  /* === Status === */
+  --color-status-info-bg: var(--color-neutral-100);
+  --color-status-info-text: var(--color-neutral-900);
+  --color-status-info-dot: var(--color-neutral-600);
+
+  --color-status-error-bg: var(--color-red-100);
+  --color-status-error-text: var(--color-red-700);
+  --color-status-error-dot: var(--color-red-500);
+  --color-status-error-border: #f2c5ca;
+
+  /* === Typography === */
+  --font-sans: 'Pretendard Variable', -apple-system, 'Apple SD Gothic Neo',
+    sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-display: 2.75rem;
+
+  /* === Radius === */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-pill: 9999px;
+
+  /* === Shadow === */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    background: var(--color-surface-page);
+    text-rendering: optimizeLegibility;
+  }
+}

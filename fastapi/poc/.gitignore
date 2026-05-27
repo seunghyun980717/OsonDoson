@@ -1,0 +1,54 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── 환경 ─────────────────────────────────────────────────────────────────────
+.env
+.venv/
+venv/
+env/
+*.env
+
+# ── 생성 파일 (재빌드 가능) ──────────────────────────────────────────────────
+# vocab (python -c "...get_or_build_vocab()" 로 재생성)
+vocab.json
+
+# 글로스 임베딩 캐시 (python -m data_utils.gloss_retriever 로 재생성)
+cache/
+
+# 학습 체크포인트 (python -m sign_to_speech.train 으로 재생성)
+checkpoints/
+
+# ── 데이터 / 미디어 (용량 큰 파일들) ────────────────────────────────────────
+# AIHUB 영상 클립 DB (~3,000개 mp4, 수 GB)
+word_clips/
+
+# 글로스 클립 경로 DB (word_clips 재추출 후 자동 생성)
+word_db.json
+
+# seq2seq 학습 데이터 (python -m seq2seq.data_builder 로 재생성)
+seq2seq/gksl_pairs.json
+
+# 데모 출력물
+output_sign.mp4
+sample_output.mp3
+app/static/audio/*.mp3
+# *.mp4
+# *.mp3
+# *.wav
+
+# AIHUB 원본 zip (로컬 경로 참조, 절대 커밋 금지)
+*.zip
+
+# ── IDE / OS ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db

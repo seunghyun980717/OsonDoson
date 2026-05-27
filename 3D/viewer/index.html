@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Dictionary Avatar Viewer</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewer-panel">
+        <div id="viewer-canvas" class="viewer-canvas"></div>
+        <div id="keypoint-preview-panel" class="keypoint-preview" aria-label="Keypoint preview">
+          <div class="keypoint-preview-title">keypoints</div>
+          <canvas id="keypoint-preview" width="220" height="160"></canvas>
+          <div
+            id="keypoint-preview-resize"
+            class="keypoint-preview-resize"
+            role="separator"
+            aria-label="Resize keypoint preview"
+            tabindex="0"
+          ></div>
+        </div>
+        <div id="reference-panel" class="reference-panel" aria-label="Reference video comparison">
+          <div class="reference-header">
+            <div>
+              <div class="reference-title">reference</div>
+              <div id="reference-frame-meta" class="reference-meta">No source frame</div>
+            </div>
+            <button id="toggle-reference-panel" type="button" class="reference-toggle">Hide</button>
+          </div>
+          <div class="reference-media">
+            <video id="reference-video" muted playsinline preload="metadata"></video>
+            <div id="reference-empty" class="reference-empty">No reference video</div>
+          </div>
+        </div>
+        <div class="viewer-status">
+          <span id="model-status">Model loading</span>
+          <span id="frame-status">No sentence</span>
+        </div>
+      </section>
+
+      <aside class="control-panel">
+        <header class="panel-header">
+          <p class="eyebrow">word_dic viewer</p>
+          <h1>Dictionary Sentence Player</h1>
+          <p id="dictionary-stats" class="muted">Loading dictionary</p>
+        </header>
+
+        <section class="panel-section">
+          <div class="dictionary-version-field">
+            <div class="field-label">Word Version</div>
+            <div id="dictionary-versions" class="dictionary-versions" role="radiogroup" aria-label="Word version"></div>
+          </div>
+          <label class="field-label" for="word-search">Search</label>
+          <div class="inline-row">
+            <input id="word-search" type="search" placeholder="Type a gloss" autocomplete="off" />
+            <button id="add-typed-word" type="button">Add</button>
+          </div>
+          <div id="word-list" class="word-list" aria-label="Dictionary words"></div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-title-row">
+            <h2>Sentence</h2>
+            <div class="section-actions">
+              <button id="save-sentence" type="button" class="text-button">Save</button>
+              <button id="clear-sentence" type="button" class="text-button">Clear</button>
+            </div>
+          </div>
+          <div id="selected-words" class="selected-words"></div>
+          <p id="selected-empty" class="muted">Select words to build a sentence.</p>
+          <div class="sentence-favorites">
+            <div class="favorites-title">Favorites</div>
+            <div id="favorite-sentences" class="favorite-sentences"></div>
+            <p id="favorites-empty" class="muted">No saved sentences.</p>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="controls-grid">
+            <label>
+              Speed
+              <select id="playback-speed">
+                <option value="0.5">0.5x</option>
+                <option value="1">1x</option>
+                <option value="1.5" selected>1.5x</option>
+              </select>
+            </label>
+            <label>
+              Transition
+              <input id="transition-frames" type="number" min="0" max="45" step="1" value="12" />
+            </label>
+            <label>
+              Blink Sync
+              <select id="blink-sync-mode">
+                <option value="off">off</option>
+                <option value="average" selected>average</option>
+                <option value="threshold">diff threshold</option>
+              </select>
+            </label>
+            <label>
+              Blink Diff <span id="blink-sync-threshold-value">0.12</span>
+              <input id="blink-sync-threshold" type="range" min="0.02" max="0.4" step="0.01" value="0.12" />
+            </label>
+            <label class="checkbox-label">
+              <input id="use-interpolation" type="checkbox" checked />
+              smoothstep
+            </label>
+          </div>
+          <div class="button-row">
+            <button id="play-sentence" type="button">Play</button>
+            <button id="stop-sentence" type="button" class="secondary-button">Stop</button>
+            <button id="reset-pose" type="button" class="secondary-button">T Pose</button>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-title-row">
+            <h2>Camera</h2>
+            <button id="reset-camera" type="button" class="text-button">Reset</button>
+          </div>
+          <div class="camera-grid">
+            <label>
+              Distance <span id="camera-distance-value">2.28</span>
+              <input id="camera-distance" type="range" min="1.4" max="3.5" step="0.01" value="2.28" />
+            </label>
+            <label>
+              Camera Height <span id="camera-height-value">1.42</span>
+              <input id="camera-height" type="range" min="1" max="1.8" step="0.01" value="1.42" />
+            </label>
+            <label>
+              Target Height <span id="target-height-value">1.42</span>
+              <input id="target-height" type="range" min="1" max="1.8" step="0.01" value="1.42" />
+            </label>
+            <label>
+              FOV <span id="camera-fov-value">28</span>
+              <input id="camera-fov" type="range" min="20" max="40" step="1" value="28" />
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-title-row">
+            <h2>Render Fit</h2>
+            <button id="reset-render-fit" type="button" class="text-button">Reset</button>
+          </div>
+          <label class="checkbox-label look-toggle">
+            <input id="render-fit-enabled" type="checkbox" checked />
+            enabled
+          </label>
+          <div class="look-grid">
+            <label>
+              Exposure <span id="render-fit-exposure-value">0.78</span>
+              <input id="render-fit-exposure" type="range" min="0.65" max="0.95" step="0.01" value="0.78" />
+            </label>
+            <label>
+              Cloth Lift <span id="render-fit-cloth-lift-value">0.020</span>
+              <input id="render-fit-cloth-lift" type="range" min="0" max="0.05" step="0.001" value="0.02" />
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <label class="field-label" for="frame-range">Frame</label>
+          <div class="inline-row">
+            <input id="frame-range" type="range" min="0" max="0" value="0" />
+            <input id="frame-number" type="number" min="0" value="0" />
+          </div>
+          <pre id="sequence-meta" class="sequence-meta">No payload</pre>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-title-row">
+            <h2>Debug</h2>
+            <button id="copy-frame-debug" type="button" class="text-button">Copy</button>
+          </div>
+          <pre id="frame-debug" class="sequence-meta">No frame</pre>
+        </section>
+      </aside>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

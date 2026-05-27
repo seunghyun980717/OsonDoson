@@ -1,0 +1,52 @@
+# Jetson backend runtime requirements
+#
+# Important:
+# - Install Jetson-compatible PyTorch separately before/after this file.
+# - Do NOT rely on plain `pip install torch` on Jetson. Use the NVIDIA wheel
+#   that matches your JetPack/L4T version.
+#
+# Example flow:
+#   conda activate sonpyeonji-ai
+#   pip install --upgrade pip
+#   pip install --no-cache <NVIDIA_JETSON_TORCH_WHEEL>
+#   pip install -r requirements.txt
+
+# Web server
+fastapi==0.135.3
+uvicorn[standard]==0.44.0
+python-dotenv==1.2.2
+python-multipart==0.0.26
+
+# Core numerics / model runtime
+numpy==2.2.6
+transformers==4.44.2
+tokenizers==0.19.1
+safetensors==0.8.0rc0
+sentencepiece==0.2.1
+
+# STT / TTS
+openai-whisper==20250625
+gTTS==2.5.4
+pyttsx3==2.99
+sounddevice==0.5.5
+
+# Translation backends / retrieval
+openai==2.32.0
+sentence-transformers==5.4.1
+requests==2.33.1
+
+# Video / keypoint utilities
+mediapipe==0.10.9
+opencv-contrib-python==4.13.0.92
+opencv-python==4.13.0.92
+
+# Indirect runtime pins that reduce Jetson-side resolver drift
+protobuf==3.20.3
+httpx==0.28.1
+httptools==0.7.1
+watchfiles==1.1.1
+websockets==16.0
+
+# Optional extras you may install separately when needed:
+# ffmpeg-python
+# torchvision / torchaudio (only if you also install Jetson-matched wheels)
