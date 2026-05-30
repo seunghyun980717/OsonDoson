@@ -14,7 +14,7 @@
 <table width="80%">
   <tr>
     <td align="left">
-      카메라로 입력한 수어는 <strong>MediaPipe 키포인트 추출</strong>과 <strong>seq2seq 번역</strong>을 거쳐 청인을 위한 <strong>음성·텍스트</strong>로 실시간 변환되고, 청인의 음성은 표정과 동작이 반영된 <strong>3D 아바타 수어</strong>로 실시간 변환되어 전달됩니다. 손의 움직임뿐 아니라 <strong>표정으로 전달되는 감정과 뉘앙스</strong>까지 함께 담아냅니다.
+      카메라로 입력한 수어는 <strong>MediaPipe 키포인트 추출</strong>과 <strong>seq2seq 번역</strong>을 거쳐 청인을 위한 <strong>음성·텍스트</strong>로 실시간 변환되고, <br>청인의 음성은 표정과 동작이 반영된 <strong>3D 아바타 수어</strong>로 실시간 변환되어 전달됩니다. 손의 움직임뿐 아니라 <strong>표정으로 전달되는 감정과 뉘앙스</strong>까지 함께 담아냅니다.
     </td>
   </tr>
 </table>
@@ -59,43 +59,88 @@
 
 <a name="developers"></a>
 
-<!-- [TODO] 팀원 사진/이름/역할/GitHub URL/기여 내용은 팀원 확인 후 채우기 -->
-
 <div align="center">
 
 <table width="100%">
     <tr>
-        <td width="25%" align="center">
-            <a href="#">
-                <img src="./readme-assets/member1.png" width="160px" height="200px" style="object-fit: cover;" />
-            </a>
+        <td width="33%" align="center">
+            <img src="./readme-assets/joonwan.png" width="160px" height="200px" style="object-fit: cover;" />
             <hr>
-            <a href="#">
-                <b>[팀원 이름]</b><br>([담당 역할])
-            </a>
+            <b>전준완</b><br>(Leader · BE)
         </td>
-        <td width="25%" align="center">
-            <a href="#">
-                <img src="./readme-assets/member2.png" width="160px" height="200px" style="object-fit: cover;" />
-            </a>
+        <td width="33%" align="center">
+            <img src="./readme-assets/kisung.jpg" width="160px" height="200px" style="object-fit: cover;" />
             <hr>
-            <a href="#">
-                <b>[팀원 이름]</b><br>([담당 역할])
-            </a>
+            <b>이기성</b><br>(AI)
         </td>
-        <!-- 인원수에 맞춰 <td> 추가/삭제 -->
+        <td width="33%" align="center">
+            <img src="./readme-assets/suwon.jpg" width="160px" height="200px" style="object-fit: cover;" />
+            <hr>
+            <b>최수원</b><br>(AI)
+        </td>
     </tr>
     <tr>
-        <td width="25%" valign="top">
+        <td width="33%" valign="top">
             <sub>
-                - [담당 업무 ①]<br>
-                - [담당 업무 ②]<br>
+                - Spring Boot WebSocket 서버 설계 및 구현 (농인·청인 사이클 상태 관리, 이벤트 핸들러)<br>
+                - Speech-to-Sign / Sign-to-Speech REST API 및 FastAPI 연동 클라이언트 개발<br>
+                - 글로스 추천 API 구현, Swagger 명세 및 공통 응답·예외 스키마 설계<br>
             </sub>
         </td>
-        <td width="25%" valign="top">
+        <td width="33%" valign="top">
             <sub>
-                - [담당 업무 ①]<br>
-                - [담당 업무 ②]<br>
+                - SignConformer(CTC) 기반 수어 인식 파이프라인 전체 설계·구현 (val WER 0.148)<br>
+                - AIHub·말뭉치 이기종 데이터 통합 전처리 및 글로스 사전(11,236개) 구축<br>
+                - pko-t5-small 한국어↔글로스 양방향 번역 fine-tuning (BLEU 70.1)<br>
+                - Jetson Orin Nano 온디바이스 / RunPod 배포용 AI 서버 구축<br>
+            </sub>
+        </td>
+        <td width="33%" valign="top">
+            <sub>
+                - Three.js 아바타 리깅 유틸 이식 및 AvatarThreeRenderer 컴포넌트 구현<br>
+                - Hand Lifting MLP 학습·QA 파이프라인 및 후보정(IK) 처리 구현<br>
+                - Sign Interpolator 보간·문장 합성 및 keypoint JSON 반환 API 구현<br>
+            </sub>
+        </td>
+    </tr>
+    <tr>
+        <td width="33%" align="center">
+            <img src="./readme-assets/chaeyoung.jpg" width="160px" height="200px" style="object-fit: cover;" />
+            <hr>
+            <b>진채영</b><br>(FE)
+        </td>
+        <td width="33%" align="center">
+            <img src="./readme-assets/seunghyun.jpg" width="160px" height="200px" style="object-fit: cover;" />
+            <hr>
+            <b>정승현</b><br>(HW · FE)
+        </td>
+        <td width="33%" align="center">
+            <img src="./readme-assets/heejung.jpg" width="160px" height="200px" style="object-fit: cover;" />
+            <hr>
+            <b>강희정</b><br>(Infra)
+        </td>
+    </tr>
+    <tr>
+        <td width="33%" valign="top">
+            <sub>
+                - React Native 앱 전체 화면 및 청인·농인 사이클 상태 머신 구현<br>
+                - WebSocket 클라이언트 훅 및 MediaPipe Holistic 키포인트 추출 훅 구현<br>
+                - 디자인 시스템 구축, Spring API 호출 인프라 및 오류 분기 처리<br>
+                - 프로젝트 초기 개발 환경 셋업(ESLint, Prettier, TS) 및 MR 템플릿 작성<br>
+            </sub>
+        </td>
+        <td width="33%" valign="top">
+            <sub>
+                - Jetson Orin Nano 실기기 검증, 듀얼 모니터 디바이스 구조 설계·3D 프린팅 모델링<br>
+                - React Native 수어 좌표 추출 라이브러리(MediaPipe tasks-vision) 도입 및 hook 구현<br>
+                - 좌표 추출 메모리·타이머·종료 흐름 안정화 및 실기기 디버깅 가이드 작성<br>
+            </sub>
+        </td>
+        <td width="33%" valign="top">
+            <sub>
+                - Docker·docker-compose 환경 구성 및 베이스 이미지 최적화<br>
+                - FastAPI·Spring Boot 초기 프로젝트 구조 및 환경변수 분리 설정<br>
+                - 글로스 추천 로직 개발 및 ffmpeg 연동·CI/CD 파이프라인 관리<br>
             </sub>
         </td>
     </tr>
@@ -273,6 +318,8 @@
 
 - **글로스 추천**: 카테고리별 자주 쓰는 표현을 빠르게 선택해 음성으로 출력
 
+<br/>
+
 ## 🏛️ 기능 시연
 
 <a name="feature"></a>
@@ -398,6 +445,8 @@
 ```
 
 </details>
+
+<br>
 
 ### 🤖 AI
 
